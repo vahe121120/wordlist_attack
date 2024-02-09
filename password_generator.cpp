@@ -37,7 +37,7 @@ int main()
 	// For choosing index of chosen array
 	int index{};
 
-	// For choosing arrays lowercase, uppercase...
+	// For choosing array lowercase, uppercase...
 	int chooseCharGroup{};
 
 	for (int i = 0; i < size; ++i)
