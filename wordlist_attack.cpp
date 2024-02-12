@@ -6,30 +6,43 @@ using namespace std;
 using namespace std::chrono;
 using uint=unsigned int;
 
+void file_existence_check(ifstream& file)
+{
+        if ( !file.is_open() )
+        {
+                cout << "Unable to open the file." << endl;
+                throw;
+        }
+}
+
+void file_closed(ifstream& file)
+{
+        if ( file.is_open() )
+        {
+                cout << "Unable to close the file." << endl;
+                cout << "If you wouldn't see \"File closed!\" message from 2-3 seconds interrupt the process!" << endl;
+                while ( file.is_open() )
+                {
+                        file.close();
+                }
+                cout << "File closed!" << endl;
+        }
+}
+
 int main()
 {
         // input file stream
         // contains passwords wordlist
         ifstream commonPasswords;
-
         commonPasswords.open("commonPasswords.txt", ios::in);
 
-        if ( !commonPasswords.is_open() )
-        {
-                cout << "Unable to open the file" << endl;
-                throw 1;
-        }
+	file_existence_check(commonPasswords);
 
         // contains generated password
         ifstream mypass;
-
         mypass.open("generatedPassword.txt", ios::in);
 
-        if ( !mypass.is_open() )
-        {
-                cout << "Unable to open the file." << endl;
-                throw 1;
-        }
+	file_existence_check(mypass);
 
         string line;    // common passwords
         string word;    // generated password
@@ -88,15 +101,8 @@ int main()
         mypass.close();
 
         // Checking file closing
-        if ( commonPasswords.is_open() )
-        {
-                cout << "File didn't closed" << endl;
-        }
-
-        if ( mypass.is_open() )
-        {
-                cout << "Passwords file didn't closed." << endl;
-        }
+        file_closed(commonPasswords);
+	file_closed(mypass);
 
         return 0;
 }
